@@ -10,6 +10,7 @@ import { useStoreGetters, useStore } from 'dashboard/composables/store';
 import ChannelName from './components/ChannelName.vue';
 import ChannelIcon from 'next/icon/ChannelIcon.vue';
 import Button from 'dashboard/components-next/button/Button.vue';
+import EditTwilioModal from './components/EditTwilioModal.vue'; 
 
 const getters = useStoreGetters();
 const store = useStore();
@@ -39,6 +40,12 @@ const confirmPlaceHolderText = computed(
       inboxName: selectedInbox.value.name,
     })}`
 );
+const showTwilioEditModal = ref(false);
+
+const openEditModal = inbox => {
+  selectedInbox.value = inbox;
+  showTwilioEditModal.value = true;
+};
 
 const deleteInbox = async ({ id }) => {
   try {
@@ -138,12 +145,26 @@ const openDelete = inbox => {
                 </router-link>
                 <Button
                   v-if="isAdmin"
+                  v-tooltip.top="'Edit Twilio Keys'"
+                  icon="i-lucide-pencil"
+                  xs
+                  sky
+                  faded
+                  @click="openEditModal(inbox)"
+                />
+                <Button
+                  v-if="isAdmin"
                   v-tooltip.top="$t('INBOX_MGMT.DELETE.BUTTON_TEXT')"
                   icon="i-lucide-trash-2"
                   xs
                   ruby
                   faded
                   @click="openDelete(inbox)"
+                />
+                <EditTwilioModal
+                  v-if="showTwilioEditModal"
+                  :inbox="selectedInbox"
+                  @close="showTwilioEditModal = false"
                 />
               </div>
             </td>
