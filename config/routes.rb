@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     token_validations: 'devise_overrides/token_validations',
     omniauth_callbacks: 'devise_overrides/omniauth_callbacks'
   }, via: [:get, :post]
+  get 'api/v1/accounts/:account_id/inboxes/:inbox_id/channel_key', to: 'api/v1/inboxes#get_channelkey'
 
   ## renders the frontend paths only if its not an api only server
   if ActiveModel::Type::Boolean.new.cast(ENV.fetch('CW_API_ONLY_SERVER', false))
@@ -24,7 +25,6 @@ Rails.application.routes.draw do
     get '/app/accounts/:account_id/settings/inboxes/new/:inbox_id/agents', to: 'dashboard#index', as: 'app_instagram_inbox_agents'
     get '/app/accounts/:account_id/settings/inboxes/:inbox_id', to: 'dashboard#index', as: 'app_instagram_inbox_settings'
     get '/app/accounts/:account_id/settings/inboxes/:inbox_id', to: 'dashboard#index', as: 'app_email_inbox_settings'
-
     resource :widget, only: [:show]
     namespace :survey do
       resources :responses, only: [:show]
@@ -361,8 +361,7 @@ Rails.application.routes.draw do
       end
     end
   end
-
-  if ChatwootApp.enterprise?
+if ChatwootApp.enterprise?
     namespace :enterprise, defaults: { format: 'json' } do
       namespace :api do
         namespace :v1 do
@@ -431,7 +430,6 @@ Rails.application.routes.draw do
       end
     end
   end
-
   get 'hc/:slug', to: 'public/api/v1/portals#show'
   get 'hc/:slug/sitemap.xml', to: 'public/api/v1/portals#sitemap'
   get 'hc/:slug/:locale', to: 'public/api/v1/portals#show'
@@ -538,7 +536,8 @@ Rails.application.routes.draw do
   # ---------------------------------------------------------------------
   # Routes for swagger docs
   get '/swagger/*path', to: 'swagger#respond'
-  get '/swagger', to: 'swagger#respond'
+  get '/swagger', to: 'swagger#respond'  
+  post '/update_channelkey', to: 'public/api/v1/inboxes#update_channelkey'
 
   # ----------------------------------------------------------------------
   # Routes for testing

@@ -1,12 +1,20 @@
 class Public::Api::V1::InboxesController < PublicController
-  before_action :set_inbox_channel
-  before_action :set_contact_inbox
-  before_action :set_conversation
+  before_action :set_inbox_channel, except: [:update_channelkey]
+  before_action :set_contact_inbox, except: [:update_channelkey]
+  before_action :set_conversation, except: [:update_channelkey]
 
   def show
     @inbox_channel = ::Channel::Api.find_by!(identifier: params[:id])
   end
 
+  def update_channelkey
+    channel = Inbox.find(params[:inbox_id]).channel
+    if channel.update(phone_number: params[:phone_number], account_sid: params[:account_sid], auth_token: params[:auth_token])
+      render json: { success: true }
+    else
+      render json: { success: false, errors: channel.errors.full_messages }, status: :unprocessable_entity
+    end
+  end  
   private
 
   def set_inbox_channel
