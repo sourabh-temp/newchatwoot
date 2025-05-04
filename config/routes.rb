@@ -538,7 +538,7 @@ if ChatwootApp.enterprise?
   get '/swagger/*path', to: 'swagger#respond'
   get '/swagger', to: 'swagger#respond'  
   post '/update_channelkey', to: 'public/api/v1/inboxes#update_channelkey'
-
+  get '/get_channelKey', to: 'public/api/v1/inboxes#get_channelKey'
   # ----------------------------------------------------------------------
   # Routes for testing
   resources :widget_tests, only: [:index] unless Rails.env.production?
