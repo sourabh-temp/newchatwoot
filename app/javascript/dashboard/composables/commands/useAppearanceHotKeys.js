@@ -34,6 +34,7 @@ const setAppearance = theme => {
     '(prefers-color-scheme: dark)'
   ).matches;
   setColorTheme(isOSOnDarkMode);
+  window.dispatchEvent(new CustomEvent('themeChange'));
 };
 
 export function useAppearanceHotKeys() {
