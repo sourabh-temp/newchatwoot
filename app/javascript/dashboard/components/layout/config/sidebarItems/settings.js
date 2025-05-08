@@ -39,6 +39,7 @@ const settings = accountId => ({
     'settings_teams_list',
     'settings_teams_new',
     'sla_list',
+    'pricing_plan',
     'custom_roles_list',
   ],
   menuItems: [
@@ -62,6 +63,16 @@ const settings = accountId => ({
       toState: frontendURL(`accounts/${accountId}/settings/agents/list`),
       toStateName: 'agent_list',
       featureFlag: FEATURE_FLAGS.AGENT_MANAGEMENT,
+    },
+    {
+      icon: 'call-start',
+      label: 'PRICING_PLAN',
+      hasSubMenu: false,
+      meta: {
+        permissions: ['administrator'],
+      },
+      toState: frontendURL(`accounts/${accountId}/settings/pricing-plans`),
+      toStateName: 'twilio_credentials',
     },
     {
       icon: 'people-team',

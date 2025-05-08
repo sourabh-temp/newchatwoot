@@ -21,6 +21,7 @@ import store from '../../../store';
 import sla from './sla/sla.routes';
 import teams from './teams/teams.routes';
 import customRoles from './customRoles/customRole.routes';
+import pricing from './pricing/pricing.route';
 import profile from './profile/profile.routes';
 
 export default {
@@ -59,5 +60,6 @@ export default {
     ...teams.routes,
     ...customRoles.routes,
     ...profile.routes,
+    ...pricing.routes,
   ],
 };

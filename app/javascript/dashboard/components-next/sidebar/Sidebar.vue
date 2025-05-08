@@ -509,6 +509,12 @@ const menuItems = computed(() => {
         },
       ],
     },
+    {
+          name: 'Pricing Plans',
+          label: t('SIDEBAR.PRICING_PLAN'),
+          icon: 'i-lucide-credit-card',
+          to: accountScopedRoute('pricing_settings_index')
+        },
   ];
 });
 </script>

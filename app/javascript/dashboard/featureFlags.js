@@ -19,6 +19,7 @@ export const FEATURE_FLAGS = {
   INBOX_VIEW: 'inbox_view',
   SLA: 'sla',
   RESPONSE_BOT: 'response_bot',
+  PRICING_PLAN: 'pricing_plan',
   CHANNEL_EMAIL: 'channel_email',
   CHANNEL_FACEBOOK: 'channel_facebook',
   CHANNEL_TWITTER: 'channel_twitter',
